@@ -1,0 +1,47 @@
+<!Doctype html>
+<html>
+
+<head>
+    <title> ToDo LIST </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js" type="text/javascript"> </script>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet"  type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+</head>
+
+<body>
+    <div class="main" ng-app="myShoppingList" ng-controller="myCtrl">
+        <h1> ToDo List </h1>
+        <div class="search">
+            <input type="text" placeholder="Enter the task" ng-model="addMe" id="search">
+            <span ng-click="addItem()"><i class="fas fa-plus"> </i> </span>
+        </div>
+        <ul>
+            <li ng-repeat="x in products"> {{x}} <i ng-click="removeItem($index)" class="fas fa-trash-alt"> </i> </li>
+        </ul>
+        <p> {{errortext}} </p>
+    </div>
+
+    <script type="text/javascript">
+    var search = document.getElementById('search');
+    var app = angular.module("myShoppingList", []);
+    app.controller("myCtrl", function($scope) {
+        $scope.products = ["Milk", "Bread", "Eggs"];
+        $scope.addItem = function() {
+            $scope.errortext="";
+            if(!$scope.addMe) {return ;}
+            if($scope.products.indexOf($scope.addMe) == -1) {
+                $scope.products.push($scope.addMe);
+            } else {
+                $scope.errortext = "This item is already added"
+            }
+            search.value="";
+        }
+        $scope.removeItem = function(x) {
+            $scope.products.splice(x, 1);
+        }
+    });
+    </script>
+
+</body>
+
+</html>
